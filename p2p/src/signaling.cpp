@@ -14,7 +14,6 @@
 
 #include "signaling.h"
 
-
 // #include <webrtc.h>
 // #include <p2pClient.h>
 
@@ -300,7 +299,8 @@ public:
         if (kind == websocket::frame_type::pong)
         {
             std::cout << "PONG" << std::endl;
-            this->_pingpongState = 1;
+            // restart heartbeat
+            this->_pingpongState = 0;
         }
     }
 
@@ -328,8 +328,8 @@ public:
             }
         }
 
-        // every 8 seconds for heartbeat
-        _timer.expires_after(std::chrono::seconds(8));
+        // every 2 seconds for heartbeat
+        _timer.expires_after(std::chrono::seconds(5));
         _timer.async_wait(boost::asio::bind_executor(_timer.get_executor(),
                                                      std::bind(
                                                          &session::onTimer,
@@ -344,7 +344,7 @@ public:
 
         if (ec)
             return fail(ec, "ping");
-
+        std::cout << "PING" << std::endl;
         if (_pingpongState == 1)
         {
             _pingpongState = 2;
