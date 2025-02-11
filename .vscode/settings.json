@@ -51,6 +51,11 @@
         "variant": "cpp",
         "format": "cpp",
         "text_encoding": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "cstring": "cpp",
+        "__config": "cpp",
+        "expected": "cpp",
+        "locale": "cpp",
+        "*.inc": "cpp"
     }
 }
